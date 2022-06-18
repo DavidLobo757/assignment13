@@ -47,10 +47,9 @@
 			</form>
 			<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post">
 				<input type="submit" value="Delete User Account" />
+				<input type="text" th:field="${user.userId}"/>
 			</form>
 				<hr/>
-				
-				
 				<h2>Accounts</h2>
 				<div  th:each="account : ${user.accounts}">
 					<a 
@@ -75,7 +74,7 @@
 			<span th:text="${user.name}"></span><br/>
 			<span th:text="${user.password}"></span>
 			<div th:each="account : ${user.accounts}">
-			<!-- <a th:href="@{/users/{userId}(userId=${user.userId})/accounts/{accountId}()}" th:text="${account.accountName}"></a> -->
+			<!--<a th:href="@{/users/{userId}(userId=${user.userId})/accounts/{accountId}()}" th:text="${account.accountName}"></a> -->
 			</div>
 			<hr/>
 		</div>

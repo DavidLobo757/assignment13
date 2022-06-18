@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
@@ -18,6 +19,7 @@ import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
+@RequestMapping("/users/{userId}/accounts")
 public class AccountController {
 
 	@Autowired
@@ -26,26 +28,19 @@ public class AccountController {
 	private AccountService accountService;
 	
 	
-	@GetMapping("/users/{userId}/accounts/{accountId}")
-	public String getUserAccount (ModelMap model,@PathVariable Long userId, @PathVariable Long accountId) {
-		User user = userService.findById(userId);
+	@GetMapping("{accountId}")
+	public String getUserAccount (ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
 		Account account = accountService.findById(accountId);
-		
-		model.put("users", Arrays.asList(user));
+		User user = userService.findById(userId);
 		model.put("user", user);
 		model.put("account", account);
-		
 		return "account";
 	}
 	
-//	@PostMapping
-//	public String postOneAccount (User user, Account account) {
-//		accountService.saveAcc(account);
-//		return "redirect:/users/" + user.getUserId();
-//	}
-//	@PostMapping
-//	public String deleteOneAccount (User user, @PathVariable Long accountId) {
-//		accountService.delAcc(accountId);
-//		return "redirect:/users/" + user.getUserId();
-//	}
+	@PostMapping("{accountId}")
+	public String postOneAccount (@PathVariable Long userId, Account account) {
+		account = accountService.saveAcc(account);
+		return "redirect:/users/" + userId + "/accounts/" + account.getAccountId();
+	}
+	
 }
