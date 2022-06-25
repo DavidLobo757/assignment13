@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
@@ -19,7 +21,7 @@ import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
-@RequestMapping("/users/{userId}/accounts")
+@RequestMapping(value = "/users/{userId}/accounts")
 public class AccountController {
 
 	@Autowired
@@ -28,9 +30,9 @@ public class AccountController {
 	private AccountService accountService;
 	
 	
-	@GetMapping("{accountId}")
+	@RequestMapping(value = "{accountId}", method = RequestMethod.GET)
 	public String getUserAccount (ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
-		Account account = accountService.findById(accountId);
+		Account account = accountService.findById(accountId); 
 		User user = userService.findById(userId);
 		model.put("user", user);
 		model.put("account", account);
@@ -41,6 +43,20 @@ public class AccountController {
 	public String postOneAccount (@PathVariable Long userId, Account account) {
 		account = accountService.saveAcc(account);
 		return "redirect:/users/" + userId + "/accounts/" + account.getAccountId();
+	}
+	
+	@PostMapping("")
+	public String createNewAccount (@PathVariable Long userId, User user) {	
+		user = userService.findById(userId);
+		
+		Account account = new Account();
+		account.setAccountName("Account #" + user.getAccounts().size());
+		account.getUsers().add(user);
+	    user.getAccounts().add(account);
+	    accountService.saveAcc(account);
+	    
+	    
+		return "redirect:/users/"+ userId + "/accounts/" + account.getAccountId();
 	}
 	
 }

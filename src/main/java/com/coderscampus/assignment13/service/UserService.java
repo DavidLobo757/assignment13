@@ -74,6 +74,7 @@ public class UserService {
 			user.getAccounts().add(savings);
 			accountRepo.save(checking);
 			accountRepo.save(savings);
+			
 		} if (user.getAddress() == null) {
 			Address address = new Address();
 			address.setAddressLine1("N/A");
@@ -90,6 +91,12 @@ public class UserService {
 		return userRepo.save(user);
 	}
 
+//	public User createNewAccount(User user) {
+//		Account savings2 = new Account();
+//		savings2.setAccountName("Savingss");
+//		savings2.getUsers().add(user);
+//		}
+	
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}

@@ -41,7 +41,7 @@ public class UserController {
 	public String postCreateUser (User user) {
 		System.out.println(user);
 		userService.saveUser(user);
-		return "redirect:/register";
+		return "redirect:/users" ;
 	}
 	
 	@GetMapping("/users")
@@ -65,19 +65,7 @@ public class UserController {
 			String newPassword = "stuff";
 			user.setPassword(newPassword);
 		}
-		if (user.getAddress() == null) {
-			Address address = new Address();
-			address.setAddressLine1("hello");
-			address.setAddressLine2("sdf");
-			address.setCity("sdf");
-			address.setCountry("sdfa");
-			address.setRegion("asdf");
-			address.setZipCode("asdf");
-			address.setUser(user);
-			address.setUserId(userId);
-		//	addressService.saveAddress(address);
-			user.setAddress(address);
-		}
+		
 		
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
@@ -91,6 +79,7 @@ public class UserController {
 	
 	@PostMapping("/users/{userId}")
 	public String postUser (User user, @PathVariable Long userId,Address address) {
+		
 		address = addressService.saveAddress(user.getAddress());
 		User currentUser = userService.findByIdAccounts(userId);
 		user.setAccounts(currentUser.getAccounts());
@@ -107,7 +96,6 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	
 	
 	
 	
