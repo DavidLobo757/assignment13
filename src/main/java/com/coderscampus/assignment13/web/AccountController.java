@@ -21,7 +21,7 @@ import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
-@RequestMapping(value = "/users/{userId}/accounts")
+@RequestMapping("/users/{userId}/accounts")
 public class AccountController {
 
 	@Autowired
@@ -30,10 +30,10 @@ public class AccountController {
 	private AccountService accountService;
 	
 	
-	@RequestMapping(value = "{accountId}", method = RequestMethod.GET)
-	public String getUserAccount (ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
+	@GetMapping("{accountId}")
+	public String getUserAccount (ModelMap model, User user, @PathVariable Long userId, @PathVariable Long accountId) {
 		Account account = accountService.findById(accountId); 
-		User user = userService.findById(userId);
+		user = userService.findById(userId);
 		model.put("user", user);
 		model.put("account", account);
 		return "account";

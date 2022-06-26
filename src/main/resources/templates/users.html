@@ -49,21 +49,16 @@
 				
 			</form>
 				<hr/>
-        
+              <form th:action="@{/users/{userId}/accounts(userId = ${user.userId})}" method="post">
 				<h2>Accounts</h2>
         
 				<div  th:each="account : ${user.accounts}">
-					<a 
-						th:href="@{/users/{userId}/accounts(userId=${user.userId})}" 
-						th:text="${account.accountName}"
-					 >
-					</a>
-                    
+					<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}" th:text="${account.accountName}"></a>
 					<br/>
 				</div>
                
 				<br/>
-                <form th:action="@{/users/{userId}/accounts(userId = ${user.userId})}" method="post">
+                
                     <input type="submit" value="Create New Bank Account" />
                 </form>
 			<a href="/users/" th:text="Back"></a>
@@ -77,10 +72,7 @@
   			  <span th:text="${user.name}"></span><br/>
   			  <span th:text="${user.password}"></span>
               <div th:each="account : ${user.accounts}">
-                <a th:href="@{/users/{userId}/{accountId}(account = ${account.accountId}) (userId=${user.userId})}"
-                   th:text="${account.accountName}"
-                >
-                </a>
+                <a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}" th:text="${account.accountName}"></a>
               </div>
   <!-- 			<a th:href="@{/users/{userId}(userId=${user.userId})/accounts/{accountId}(accoundId=${account.accountName})}" th:text="${account.accountName}"></a> -->
   			<hr/>
