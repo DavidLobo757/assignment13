@@ -1,6 +1,7 @@
 package com.coderscampus.assignment13.service;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -86,16 +87,13 @@ public class UserService {
 			address.setUser(user);
 			address.setUserId(user.getUserId());
 			user.setAddress(address);
-		}
+		} 
+		
 			
 		return userRepo.save(user);
 	}
 
-//	public User createNewAccount(User user) {
-//		Account savings2 = new Account();
-//		savings2.setAccountName("Savingss");
-//		savings2.getUsers().add(user);
-//		}
+
 	
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
